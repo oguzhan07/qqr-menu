@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Holla';
+  src: url('./Holla-Regular.woff2') format('woff2'),
+       url('./Holla-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

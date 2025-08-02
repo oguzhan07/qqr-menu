@@ -1,0 +1,3 @@
+// supabase-config.js
+export const SUPABASE_URL = "https://ppdionwwddmdokivyvqu.supabase.co";
+export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwZGlvbnd3ZGRtZG9raXZ5dnF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5MDUyMjYsImV4cCI6MjA2OTQ4MTIyNn0.MtyBK4-yRBnp513090kJZzbQUVWLfmvRG0Z0gbZlMxY";

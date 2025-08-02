@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Panel · Menü Yönetimi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-50 text-zinc-900">
+  <!-- Header -->
+  <header class="border-b bg-white">
+    <div class="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
+      <h1 class="font-semibold">Admin Panel</h1>
+      <div class="flex items-center gap-3">
+        <span id="whoami" class="text-sm text-zinc-600"></span>
+        <button id="signOutBtn" class="hidden px-3 py-1.5 rounded-md bg-zinc-900 text-white text-sm">Çıkış</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth view -->
+  <main id="authView" class="mx-auto max-w-sm px-4 py-10">
+    <div class="bg-white border rounded-xl p-6 shadow-sm">
+      <h2 class="text-lg font-medium mb-4">Giriş Yap</h2>
+      <div class="space-y-3">
+        <input id="email" type="email" placeholder="E-posta" class="w-full border rounded-lg px-3 py-2">
+        <input id="password" type="password" placeholder="Şifre" class="w-full border rounded-lg px-3 py-2">
+        <button id="signInBtn" class="w-full py-2 rounded-lg bg-emerald-600 text-white">Giriş yap</button>
+      </div>
+      <p class="text-xs text-zinc-500 mt-3">Admin hesabını Supabase panelinden tanımlayacaksın.</p>
+    </div>
+  </main>
+
+  <!-- App view -->
+  <main id="appView" class="hidden mx-auto max-w-6xl px-4 py-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-semibold">Ürünler</h2>
+      <label class="inline-flex items-center gap-3">
+        <input id="imageFile" type="file" accept="image/*" class="hidden">
+        <button id="addOpen" class="px-3 py-2 rounded-lg bg-zinc-900 text-white">Yeni Ürün</button>
+      </label>
+    </div>
+
+    <!-- Add/Edit form (modal benzeri basit kart) -->
+    <section id="formCard" class="hidden mb-6 bg-white border rounded-xl p-4">
+      <h3 id="formTitle" class="font-medium mb-3">Yeni Ürün Ekle</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="space-y-3">
+          <input id="nameInput" type="text" placeholder="Ürün adı" class="w-full border rounded-lg px-3 py-2">
+          <input id="priceInput" type="number" min="0" step="0.01" placeholder="Fiyat (₺)" class="w-full border rounded-lg px-3 py-2">
+          <input id="categoryInput" type="text" placeholder="Kategori (örn. Kebaplar)" class="w-full border rounded-lg px-3 py-2">
+          <div class="flex items-center gap-3">
+            <button id="saveBtn" class="px-3 py-2 rounded-lg bg-emerald-600 text-white">Kaydet</button>
+            <button id="cancelBtn" class="px-3 py-2 rounded-lg border">İptal</button>
+          </div>
+          <p id="formHint" class="text-xs text-zinc-500">Görsel seçmek için “Yeni Ürün” butonuna tıkla.</p>
+        </div>
+        <div class="flex items-center justify-center border rounded-lg min-h-[180px]">
+          <img id="preview" alt="" class="max-h-56 rounded-lg hidden">
+          <span id="noPreview" class="text-sm text-zinc-500">Önizleme yok</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <div class="bg-white border rounded-xl overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-zinc-100 text-zinc-700">
+          <tr>
+            <th class="text-left font-medium px-4 py-2">Kapak</th>
+            <th class="text-left font-medium px-4 py-2">Ad</th>
+            <th class="text-left font-medium px-4 py-2">Fiyat</th>
+            <th class="text-left font-medium px-4 py-2">Kategori</th>
+            <th class="text-right font-medium px-4 py-2">İşlemler</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
