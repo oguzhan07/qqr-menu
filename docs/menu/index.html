@@ -33,7 +33,7 @@
       gap: 20px;
       width: 100%;
       max-width: 1200px;
-      flex-wrap: wrap; /* Flex container'ı kırılabilir hale getirdik */
+      flex-wrap: wrap;
     }
 
     .category {
@@ -71,20 +71,27 @@
 
     /* Pide kategorisi için yatay sığdırma */
     .pide img {
-      object-fit: cover; /* Yatayda sığdırma */
-      max-height: 150px; /* Yüksekliği sınırlıyoruz */
+      object-fit: cover;
+      max-height: 150px;
     }
 
-    /* İçecek kategorisi için dikey sığdırma */
-    .icecek img {
-      object-fit: contain; /* Dikeyde sığdırma */
-      max-height: 200px; /* Yüksekliği sınırlıyoruz */
+    /* İçecek kategorisi için iki sütun */
+    .icecek {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .icecek .page {
+      width: 48%; /* İki sütun yapabilmek için her sayfayı %48 genişlikte ayarladık */
+      height: auto;
     }
 
     /* İçeceklerin yazı rengini siyah yapma */
     .icecek .caption,
     .icecek .caption-price {
-      color: black; /* Yazı rengi siyah */
+      color: black;
     }
 
     .caption {
@@ -107,19 +114,19 @@
 
     @media (max-width: 1080px) {
       .category {
-        width: 100%; /* Kategori genişliği mobilde daha geniş olacak */
+        width: 100%;
       }
       .menu-container {
-        justify-content: center; /* Mobilde menü elemanlarını ortalayacağız */
+        justify-content: center;
       }
     }
 
     @media (max-width: 600px) {
       .caption {
-        font-size: 16px; /* Yazı boyutunu mobilde daha küçük yapıyoruz */
+        font-size: 16px;
       }
       .caption-price {
-        font-size: 14px; /* Fiyat yazısını biraz daha küçültüyoruz */
+        font-size: 14px;
       }
     }
 
@@ -130,13 +137,11 @@
     <!-- Pide Kategorisi -->
     <div class="category" id="pideCategory">
       <h2>Pide ve Lahmacun</h2>
-      <!-- Menü öğeleri buraya eklenecek -->
     </div>
 
     <!-- İçecek Kategorisi -->
     <div class="category" id="icecekCategory">
       <h2>İçecekler</h2>
-      <!-- Menü öğeleri buraya eklenecek -->
     </div>
   </div>
 
@@ -149,7 +154,7 @@
     const icecekCategory = document.getElementById("icecekCategory");
 
     async function loadMenuItems() {
-      const { data: menuItems, error } = await supabase.from("menu_items").select("*").order("created_at", { ascending: true }); // Artan sıralama (ilk eklenen en üstte)
+      const { data: menuItems, error } = await supabase.from("menu_items").select("*").order("created_at", { ascending: true });
       if (error) {
         console.error("Hata:", error.message);
         return;
@@ -159,7 +164,7 @@
         const page = document.createElement("div");
         page.classList.add("page");
 
-        page.innerHTML = ` 
+        page.innerHTML = `
           <img src="${item.image_url}" alt="${item.name}">
           <div class="caption">${item.name}</div>
           <div class="caption-price">₺${item.price}</div>
