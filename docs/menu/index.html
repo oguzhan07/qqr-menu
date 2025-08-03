@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Menü</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #e5e5e5;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      padding: 40px 0;
+    }
+
+    .menu-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .category {
+      width: 300px;
+      height: 100%;
+      overflow-y: auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .category h2 {
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .page {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+    }
+
+    /* Pide kategorisi için yatay sığdırma */
+    .pide img {
+      object-fit: cover; /* Yatayda sığdırma */
+      max-height: 150px; /* Yüksekliği sınırlıyoruz */
+    }
+
+    /* İçecek kategorisi için dikey sığdırma */
+    .icecek img {
+      object-fit: contain; /* Dikeyde sığdırma */
+      max-height: 200px; /* Yüksekliği sınırlıyoruz */
+    }
+
+    /* İçeceklerin yazı rengini siyah yapma */
+    .icecek .caption,
+    .icecek .caption-price {
+      color: black; /* Yazı rengi siyah */
+    }
+
+    .caption {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      color: white;
+      font-size: 18px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .caption-price {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      color: white;
+      font-size: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 1080px) {
+      .category {
+        width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container" id="menuContainer">
+    <!-- Pide Kategorisi -->
+    <div class="category" id="pideCategory">
+      <h2>Pide ve Lahmacun</h2>
+      <!-- Menü öğeleri buraya eklenecek -->
+    </div>
+
+    <!-- İçecek Kategorisi -->
+    <div class="category" id="icecekCategory">
+      <h2>İçecekler</h2>
+      <!-- Menü öğeleri buraya eklenecek -->
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../supabase-config.js";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const pideCategory = document.getElementById("pideCategory");
+    const icecekCategory = document.getElementById("icecekCategory");
+
+    async function loadMenuItems() {
+      const { data: menuItems, error } = await supabase.from("menu_items").select("*").order("created_at", { ascending: true }); // Artan sıralama (ilk eklenen en üstte)
+      if (error) {
+        console.error("Hata:", error.message);
+        return;
+      }
+
+      menuItems.forEach(item => {
+        const page = document.createElement("div");
+        page.classList.add("page");
+
+        page.innerHTML = `
+          <img src="${item.image_url}" alt="${item.name}">
+          <div class="caption">${item.name}</div>
+          <div class="caption-price">₺${item.price}</div>
+        `;
+
+        // Kategorilere göre ayırma
+        if (item.category.toLowerCase().includes("pide")) {
+          page.classList.add("pide"); // Pide için özel stil
+          pideCategory.appendChild(page);
+        } else if (item.category.toLowerCase().includes("içecek")) {
+          page.classList.add("icecek"); // İçecekler için özel stil
+          icecekCategory.appendChild(page);
+        }
+      });
+    }
+
+    loadMenuItems();
+  </script>
+</body>
+</html>
