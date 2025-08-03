@@ -75,11 +75,11 @@
       max-height: 150px; /* Yüksekliği sınırlıyoruz */
     }
 
-    /* İçecek kategorisi için görseli yanlardan sığdırma */
+    /* İçecek kategorisi için görselleri yanlardan sığdırma ve tam görünmesi */
     .icecek img {
-      object-fit: contain; /* Görsellerin tamamı sığacak şekilde orantılı küçültülür */
+      object-fit: contain; /* Yanlardan sığdırma ve görselin tam görünmesini sağlama */
       width: 100%; /* Genişlik %100 olarak ayarlanır */
-      max-height: 150px; /* Yüksekliği sınırlıyoruz */
+      height: auto; /* Yüksekliği orantılı olarak ayarlanır */
     }
 
     /* İçeceklerin yazı rengini siyah yapma */
