@@ -71,21 +71,14 @@
 
     /* Pide kategorisi için yatay sığdırma */
     .pide img {
-      object-fit: cover;
-      max-height: 150px;
+      object-fit: cover; /* Yatayda sığdırma */
+      max-height: 150px; /* Yüksekliği sınırlıyoruz */
     }
 
-    /* İçecek kategorisi için iki sütun */
-    .icecek {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-between;
-    }
-
-    .icecek .page {
-      width: 48%; /* İki sütun yapabilmek için her sayfayı %48 genişlikte ayarladık */
-      height: auto;
+    /* İçecek kategorisi için görseli tam sığdırma */
+    .icecek img {
+      object-fit: cover; /* Yüksekliği ve genişliği orantılı olarak küçültme */
+      max-height: 150px; /* İçeceklerin de aynı yükseklik olması sağlanıyor */
     }
 
     /* İçeceklerin yazı rengini siyah yapma */
