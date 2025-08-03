@@ -29,15 +29,16 @@
 
     .menu-container {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       gap: 20px;
       width: 100%;
       max-width: 1200px;
+      flex-wrap: wrap; /* Flex container'ı kırılabilir hale getirdik */
     }
 
     .category {
       width: 300px;
-      height: 100%;
+      height: auto;
       overflow-y: auto;
       background: white;
       border-radius: 16px;
@@ -106,9 +107,22 @@
 
     @media (max-width: 1080px) {
       .category {
-        width: 250px;
+        width: 100%; /* Kategori genişliği mobilde daha geniş olacak */
+      }
+      .menu-container {
+        justify-content: center; /* Mobilde menü elemanlarını ortalayacağız */
       }
     }
+
+    @media (max-width: 600px) {
+      .caption {
+        font-size: 16px; /* Yazı boyutunu mobilde daha küçük yapıyoruz */
+      }
+      .caption-price {
+        font-size: 14px; /* Fiyat yazısını biraz daha küçültüyoruz */
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -145,7 +159,7 @@
         const page = document.createElement("div");
         page.classList.add("page");
 
-        page.innerHTML = `
+        page.innerHTML = ` 
           <img src="${item.image_url}" alt="${item.name}">
           <div class="caption">${item.name}</div>
           <div class="caption-price">₺${item.price}</div>
